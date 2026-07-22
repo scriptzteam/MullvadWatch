@@ -20,12 +20,15 @@ jobs:
         run: |
           git config --local user.email "scriptzteam@gmail.com"
           git config --local user.name "scriptzteam"
+          
+          # Stage the updated Readme
           git add -f Readme.md
-          git status
-          if git status --porcelain | grep -q '^?? \|^A  \|^M  '; then
-            echo "Changes detected, committing..."
-            git commit -m "Update"
+          
+          # Check if Readme.md specifically has staged changes (M or A)
+          if git status --porcelain | grep -q '^[MA]  Readme.md'; then
+            echo "Changes detected in Readme.md, committing..."
+            git commit -m "Update Mullvad Data [skip ci]"
             git push
           else
-            echo "No changes to commit"
-          fi 
+            echo "No changes to Readme.md to commit"
+          fi
